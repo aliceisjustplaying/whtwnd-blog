@@ -15,7 +15,8 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
         serif: ["var(--font-libre-baskerville)", "serif"],
-        mono: ["var(--font-berkeley-mono)", "monospace"],
+        mono: ["var(--font-cascadia-code)", "monospace"],
+        system: ["-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, sans-serif"],
       }
     },
   },

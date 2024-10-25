@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { HOSTNAME } from "#/lib/config";
 
 export const size = {
   width: 1200,
@@ -24,7 +25,7 @@ export default async function OpenGraphImage() {
             fontStyle: "italic",
           }}
         >
-          mozzius.dev
+          {HOSTNAME}
         </h1>
         <h1 style={{ fontSize: 32 }}>a webbed site</h1>
       </div>

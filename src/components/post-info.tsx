@@ -2,8 +2,8 @@ import { ClockIcon } from "lucide-react";
 import Image from "next/image";
 import readingTime from "reading-time";
 
-import me from "#/assets/me_blue_square.jpg";
-import { MY_DID } from "#/lib/bsky";
+import me from "#/assets/me.png";
+import { MY_DID } from "#/lib/config";
 import { date } from "#/lib/date";
 
 import { Paragraph } from "./typography";
@@ -25,14 +25,14 @@ export function PostInfo({
             width={14}
             height={14}
             src={me}
-            alt="Samuel's profile picture"
+            alt="alice's profile picture"
             className="inline rounded-full mr-1 mb-1"
           />
           <a
             href={`https://bsky.app/profile/${MY_DID}`}
             className="hover:underline hover:underline-offset-4"
           >
-            Samuel
+            alice
           </a>{" "}
           &middot;{" "}
         </>

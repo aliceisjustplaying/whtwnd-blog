@@ -12,8 +12,8 @@ import { Footer } from "#/components/footer";
 import { PostInfo } from "#/components/post-info";
 import { Code, Paragraph, Title } from "#/components/typography";
 import { getPosts } from "#/lib/api";
-import { bsky, MY_DID } from "#/lib/bsky";
-
+import { bsky } from "#/lib/bsky";
+import { HOSTNAME, MY_DID } from "#/lib/config";
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour
 
@@ -35,9 +35,9 @@ export async function generateMetadata({
   const entry = post.data.value as ComWhtwndBlogEntry.Record;
 
   return {
-    title: entry.title + " — mozzius.dev",
-    authors: [{ name: "Samuel", url: `https://bsky.app/profile/${MY_DID}` }],
-    description: `by Samuel · ${readingTime(entry.content).text}`,
+    title: entry.title + ` — ${HOSTNAME}`,
+    authors: [{ name: "alice", url: `https://bsky.app/profile/${MY_DID}` }],
+    description: `by alice · ${readingTime(entry.content).text}`,
   };
 }
 
@@ -59,9 +59,9 @@ export default async function BlogPage({
   const entry = post.data.value as ComWhtwndBlogEntry.Record;
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] justify-items-center min-h-dvh py-8 px-4 xs:px-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-[600px] overflow-hidden">
-        <article className="w-full space-y-8">
+    <div className="grid grid-rows-[10px_1fr_20px] justify-items-center min-h-dvh py-2 px-4 xs:px-8 pb-20 sm:p-8">
+      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start w-full max-w-[600px] overflow-hidden">
+        <article className="w-full space-y-4">
           <div className="space-y-4 w-full">
             <Link
               href="/"
@@ -76,7 +76,7 @@ export default async function BlogPage({
               createdAt={entry.createdAt}
               includeAuthor
             />
-            <div className="diagonal-pattern w-full h-3" />
+            <hr className="border-slate-800/10 dark:border-slate-100/10" />
           </div>
           <Markdown
             rehypePlugins={[rehypeSanitize]}
@@ -89,7 +89,7 @@ export default async function BlogPage({
               h6: (props) => <Title level="h6" {...props} />,
               p: (props) => (
                 <Paragraph
-                  className="leading-7 [&:not(:first-child)]:mt-6"
+                  className="leading-7 [&:not(:first-child)]:mt-2"
                   {...props}
                 />
               ),
@@ -122,7 +122,7 @@ export default async function BlogPage({
                       // eslint-disable-next-line react/no-children-prop
                       children={String(children).replace(/\n$/, "")}
                       lang={match[1]}
-                      className="!mt-8 text-sm rounded !max-w-full overflow-hidden"
+                      className="!mt-8 text-sm !max-w-full overflow-hidden"
                     />
                   );
                 } else {

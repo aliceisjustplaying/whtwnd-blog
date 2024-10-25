@@ -1,6 +1,6 @@
 import { siBluesky as BlueskyIcon, siGithub as GithubIcon } from "simple-icons";
 
-import { MY_DID } from "#/lib/bsky";
+import { GITHUB_USERNAME, MY_DID } from "#/lib/config";
 
 export function Footer() {
   return (
@@ -18,7 +18,7 @@ export function Footer() {
       </a>
       <a
         className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-        href="https://github.com/mozzius"
+        href={`https://github.com/${GITHUB_USERNAME}`}
         target="_blank"
         rel="noopener noreferrer"
       >

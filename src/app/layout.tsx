@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import { cx } from "#/lib/cx";
 
 import "./globals.css";
+import { HOSTNAME } from "#/lib/config";
 
 const sans = Inter({
   variable: "--font-inter",
@@ -17,22 +18,22 @@ const serif = Libre_Baskerville({
   variable: "--font-libre-baskerville",
   subsets: ["latin"],
   weight: "400",
-  style: "italic",
+  style: "normal",
 });
 
 const mono = localFont({
-  src: "./fonts/BerkeleyMono-Regular.woff2",
-  variable: "--font-berkeley-mono",
+  src: "./fonts/CascadiaCodeNF.woff2",
+  variable: "--font-cascadia-code",
   weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: "mozzius.dev",
+  title: HOSTNAME,
   description: "a webbed site",
   alternates: {
-    canonical: "https://mozzius.dev",
+    canonical: `https://${HOSTNAME}`,
     types: {
-      "application/rss+xml": "https://mozzius.dev/rss",
+      "application/rss+xml": `https://${HOSTNAME}/rss`,
     },
   },
 };
@@ -46,8 +47,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <NextPlausible
-          domain="mozzius.dev"
-          customDomain="https://plausible.mozzius.dev"
+          domain={HOSTNAME}
+          customDomain={`https://plausible.${HOSTNAME}`}
           trackOutboundLinks
           selfHosted
         />

@@ -6,6 +6,7 @@ import RSS from "rss";
 import { unified } from "unified";
 
 import { getPosts } from "#/lib/api";
+import { HOSTNAME } from "#/lib/config";
 
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour
@@ -14,9 +15,9 @@ export async function GET() {
   const posts = await getPosts();
 
   const rss = new RSS({
-    title: "mozzius.dev",
-    feed_url: "https://mozzius.dev/rss",
-    site_url: "https://mozzius.dev",
+    title: HOSTNAME,
+    feed_url: `https://${HOSTNAME}/rss`,
+    site_url: `https://${HOSTNAME}`,
     description: "a webbed site",
   });
 
@@ -30,7 +31,7 @@ export async function GET() {
         .use(rehypeStringify)
         .process(post.value.content)
         .then((v) => v.toString()),
-      url: `https://mozzius.dev/post/${post.uri.split("/").pop()}`,
+      url: `https://${HOSTNAME}/post/${post.uri.split("/").pop()}`,
       date: new Date(post.value.createdAt ?? Date.now()),
     });
   }

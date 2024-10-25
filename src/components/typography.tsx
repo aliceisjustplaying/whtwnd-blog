@@ -13,7 +13,7 @@ export function Title({
   switch (level) {
     case "h1":
       style =
-        "text-4xl lg:text-5xl";
+        "text-3xl lg:text-5xl";
       break;
     case "h2":
       style =
@@ -34,7 +34,7 @@ export function Title({
   }
 
   return (
-    <Tag className={cx("font-serif font-bold italic text-balance tracking-tight scroll-m-20 uppercase mt-8 [&>code]:text-[length:inherit] first:mt-0", style, className)} {...props} />
+    <Tag className={cx("font-sans-serif font-bold text-balance tracking-tight scroll-m-20 uppercase mt-16 [&>code]:text-[length:inherit] first:mt-0", style, className)} {...props} />
   );
 }
 
@@ -42,14 +42,14 @@ export function Paragraph({
   className,
   ...props
 }: React.HTMLProps<HTMLParagraphElement>) {
-  return <p className={cx("font-sans text-pretty", className)} {...props} />;
+  return <p className={cx("font-system text-pretty", className)} {...props} />;
 }
 
 export function Code({ className, ...props }: React.HTMLProps<HTMLElement>) {
   return (
     <code
       className={cx(
-        "font-mono normal-case relative rounded px-[0.3rem] py-[0.2rem] bg-slate-100 text-sm dark:bg-slate-800 dark:text-slate-400",
+        "font-mono normal-case relative px-[0.3rem] py-[0.2rem] bg-slate-100 text-sm dark:bg-slate-800 dark:text-slate-400",
         className,
       )}
       {...props}
