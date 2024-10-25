@@ -21,7 +21,7 @@ export async function getPosts() {
 }
 
 function drafts(record: ComAtprotoRepoListRecords.Record) {
-  // if (process.env.NODE_ENV === "development") return true;
+  if (process.env.NODE_ENV === "development") return true;
   const post = record.value as ComWhtwndBlogEntry.Record;
   return post.visibility === "public";
 }
