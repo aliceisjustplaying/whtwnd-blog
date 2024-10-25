@@ -1,4 +1,5 @@
 import { withPlausibleProxy } from "next-plausible";
+import { PLAUSIBLE_DOMAIN, USE_PLAUSIBLE } from "./src/lib/config";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
