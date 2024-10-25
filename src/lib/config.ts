@@ -6,5 +6,3 @@ export const TITLE = "alice.bsky.sh";
 export const DESCRIPTION =
   "this is a blog. there are many like it, but this one is mine.";
 export const GITHUB_USERNAME = "aliceisjustplaying";
-export const USE_PLAUSIBLE = false;
-export const PLAUSIBLE_DOMAIN = "plausible.mozzius.dev";

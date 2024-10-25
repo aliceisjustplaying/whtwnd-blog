@@ -1,5 +1,4 @@
 import { withPlausibleProxy } from "next-plausible";
-import { PLAUSIBLE_DOMAIN, USE_PLAUSIBLE } from "./src/lib/config";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,6 +13,10 @@ const nextConfig = {
     ],
   },
 };
+
+// TODO: janky
+const USE_PLAUSIBLE = false;
+const PLAUSIBLE_DOMAIN = "plausible.alice.bsky.sh";
 
 if (USE_PLAUSIBLE) {
   nextConfig = withPlausibleProxy({
