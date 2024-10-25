@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import NextPlausible from "next-plausible";
 import { Inter, Libre_Baskerville } from "next/font/google";
 import localFont from "next/font/local";
-
 import { cx } from "#/lib/cx";
 
 import "./globals.css";
+
 import { HOSTNAME } from "#/lib/config";
 
 const sans = Inter({
@@ -58,7 +58,7 @@ export default function RootLayout({
           sans.variable,
           serif.variable,
           mono.variable,
-          "antialiased font-sans",
+          "font-sans antialiased",
         )}
       >
         {children}

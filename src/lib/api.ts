@@ -1,3 +1,4 @@
+import { XRPCResponse } from "@atcute/client";
 import {
   type ComAtprotoRepoListRecords,
   type ComWhtwndBlogEntry,
@@ -5,17 +6,29 @@ import {
 
 import { bsky } from "./bsky";
 import { MY_DID } from "./config";
+
 export async function getPosts() {
-  const posts = await bsky.get("com.atproto.repo.listRecords", {
-    params: {
-      repo: MY_DID,
-      collection: "com.whtwnd.blog.entry",
-      // todo: pagination
-    },
-  });
-  return posts.data.records.filter(
-    drafts,
-  ) as (ComAtprotoRepoListRecords.Record & {
+  let allPosts: ComAtprotoRepoListRecords.Record[] = [];
+  let cursor;
+
+  do {
+    const page: XRPCResponse<ComAtprotoRepoListRecords.Output> = await bsky.get(
+      "com.atproto.repo.listRecords",
+      {
+        params: {
+          repo: MY_DID,
+          collection: "com.whtwnd.blog.entry",
+          cursor,
+          limit: 100,
+        },
+      },
+    );
+
+    allPosts = [...allPosts, ...page.data.records];
+    cursor = page.data.cursor;
+  } while (cursor);
+
+  return allPosts.filter(drafts) as (ComAtprotoRepoListRecords.Record & {
     value: ComWhtwndBlogEntry.Record;
   })[];
 }

@@ -1,19 +1,19 @@
+import { type ComWhtwndBlogEntry } from "@atcute/client/lexicons";
+import { Code as SyntaxHighlighter } from "bright";
 import { ArrowLeftIcon } from "lucide-react";
-import Markdown from "react-markdown";
 import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { type ComWhtwndBlogEntry } from "@atcute/client/lexicons";
-import { Code as SyntaxHighlighter } from "bright";
+import Markdown from "react-markdown";
 import readingTime from "reading-time";
 import rehypeSanitize from "rehype-sanitize";
-
 import { Footer } from "#/components/footer";
 import { PostInfo } from "#/components/post-info";
 import { Code, Paragraph, Title } from "#/components/typography";
 import { getPosts } from "#/lib/api";
 import { bsky } from "#/lib/bsky";
-import { HOSTNAME, MY_DID } from "#/lib/config";
+import { AUTHOR_NAME, HOSTNAME, MY_DID } from "#/lib/config";
+
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour
 
@@ -36,8 +36,8 @@ export async function generateMetadata({
 
   return {
     title: entry.title + ` — ${HOSTNAME}`,
-    authors: [{ name: "alice", url: `https://bsky.app/profile/${MY_DID}` }],
-    description: `by alice · ${readingTime(entry.content).text}`,
+    authors: [{ name: AUTHOR_NAME, url: `https://bsky.app/profile/${MY_DID}` }],
+    description: `by ${AUTHOR_NAME} · ${readingTime(entry.content).text}`,
   };
 }
 
@@ -59,15 +59,15 @@ export default async function BlogPage({
   const entry = post.data.value as ComWhtwndBlogEntry.Record;
 
   return (
-    <div className="grid grid-rows-[10px_1fr_20px] justify-items-center min-h-dvh py-2 px-4 xs:px-8 pb-20 sm:p-8">
-      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start w-full max-w-[600px] overflow-hidden">
+    <div className="xs:px-8 grid min-h-dvh grid-rows-[10px_1fr_20px] justify-items-center px-4 py-2 pb-20 sm:p-8">
+      <main className="row-start-2 flex w-full max-w-[600px] flex-col items-center gap-0 overflow-hidden sm:items-start">
         <article className="w-full space-y-4">
-          <div className="space-y-4 w-full">
+          <div className="w-full space-y-4">
             <Link
               href="/"
-              className="hover:underline hover:underline-offset-4 font-medium"
+              className="font-medium hover:underline hover:underline-offset-4"
             >
-              <ArrowLeftIcon className="inline size-4 align-middle mb-px mr-1" />
+              <ArrowLeftIcon className="mb-px mr-1 inline size-4 align-middle" />
               Back
             </Link>
             <Title>{entry.title}</Title>
@@ -95,19 +95,19 @@ export default async function BlogPage({
               ),
               blockquote: (props) => (
                 <blockquote
-                  className="mt-6 border-l-2 pl-4 italic border-slate-200 text-slate-600 dark:border-slate-800 dark:text-slate-400"
+                  className="mt-6 border-l-2 border-slate-200 pl-4 italic text-slate-600 dark:border-slate-800 dark:text-slate-400"
                   {...props}
                 />
               ),
               ul: (props) => (
                 <ul
-                  className="my-6 ml-6 list-disc [&>ul]:my-2 [&>ol]:my-2 [&>li]:mt-2"
+                  className="my-6 ml-6 list-disc [&>li]:mt-2 [&>ol]:my-2 [&>ul]:my-2"
                   {...props}
                 />
               ),
               ol: (props) => (
                 <ol
-                  className="my-6 ml-6 list-decimal [&>ul]:my-2 [&>ol]:my-2 [&>li]:mt-2"
+                  className="my-6 ml-6 list-decimal [&>li]:mt-2 [&>ol]:my-2 [&>ul]:my-2"
                   {...props}
                 />
               ),
@@ -122,7 +122,7 @@ export default async function BlogPage({
                       // eslint-disable-next-line react/no-children-prop
                       children={String(children).replace(/\n$/, "")}
                       lang={match[1]}
-                      className="!mt-8 text-sm !max-w-full overflow-hidden"
+                      className="!mt-8 !max-w-full overflow-hidden text-sm"
                     />
                   );
                 } else {
@@ -137,7 +137,7 @@ export default async function BlogPage({
                 />
               ),
               img: ({ src, alt }) => (
-                <span className="block mt-8 w-full aspect-video relative">
+                <span className="relative mt-8 block aspect-video w-full">
                   <Image
                     src={src!}
                     alt={alt!}

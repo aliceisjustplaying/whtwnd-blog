@@ -12,12 +12,10 @@ export function Title({
   let style;
   switch (level) {
     case "h1":
-      style =
-        "text-3xl lg:text-5xl";
+      style = "text-3xl lg:text-5xl";
       break;
     case "h2":
-      style =
-        "border-b pb-2 text-3xl";
+      style = "border-b pb-2 text-3xl";
       break;
     case "h3":
       style = "text-2xl";
@@ -34,7 +32,14 @@ export function Title({
   }
 
   return (
-    <Tag className={cx("font-sans-serif font-bold text-balance tracking-tight scroll-m-20 uppercase mt-16 [&>code]:text-[length:inherit] first:mt-0", style, className)} {...props} />
+    <Tag
+      className={cx(
+        "font-sans-serif mt-16 scroll-m-20 text-balance font-bold uppercase tracking-tight first:mt-0 [&>code]:text-[length:inherit]",
+        style,
+        className,
+      )}
+      {...props}
+    />
   );
 }
 
@@ -42,14 +47,14 @@ export function Paragraph({
   className,
   ...props
 }: React.HTMLProps<HTMLParagraphElement>) {
-  return <p className={cx("font-system text-pretty", className)} {...props} />;
+  return <p className={cx("text-pretty font-system", className)} {...props} />;
 }
 
 export function Code({ className, ...props }: React.HTMLProps<HTMLElement>) {
   return (
     <code
       className={cx(
-        "font-mono normal-case relative px-[0.3rem] py-[0.2rem] bg-slate-100 text-sm dark:bg-slate-800 dark:text-slate-400",
+        "relative bg-slate-100 px-[0.3rem] py-[0.2rem] font-mono text-sm normal-case dark:bg-slate-800 dark:text-slate-400",
         className,
       )}
       {...props}

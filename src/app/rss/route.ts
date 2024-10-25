@@ -4,7 +4,6 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import RSS from "rss";
 import { unified } from "unified";
-
 import { getPosts } from "#/lib/api";
 import { HOSTNAME } from "#/lib/config";
 

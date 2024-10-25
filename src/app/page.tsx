@@ -8,16 +8,18 @@ export const revalidate = 3600; // 1 hour
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] justify-items-center min-h-dvh py-2 px-4 xs:px-8 pb-20 sm:p-8">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-[400px]">
+    <div className="xs:px-8 grid min-h-dvh grid-rows-[20px_1fr_20px] justify-items-center px-4 py-2 pb-20 sm:p-8">
+      <main className="row-start-2 flex w-full max-w-[400px] flex-col items-center gap-8 sm:items-start">
         <div>
           <Title level="h1" className="m-0 flex flex-row justify-end">
             {TITLE}
           </Title>
-          <span className="font-bold text-xs flex flex-row justify-end">{DESCRIPTION}</span>
+          <span className="flex flex-row justify-end text-xs font-bold">
+            {DESCRIPTION}
+          </span>
         </div>
 
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex w-full flex-col gap-4">
           <PostList />
         </div>
       </main>
