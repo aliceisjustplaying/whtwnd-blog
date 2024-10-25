@@ -6,7 +6,7 @@ import { cx } from "#/lib/cx";
 
 import "./globals.css";
 
-import { HOSTNAME } from "#/lib/config";
+import { DESCRIPTION, HOSTNAME } from "#/lib/config";
 
 const sans = Inter({
   variable: "--font-inter",
@@ -29,7 +29,7 @@ const mono = localFont({
 
 export const metadata: Metadata = {
   title: HOSTNAME,
-  description: "a webbed site",
+  description: DESCRIPTION,
   alternates: {
     canonical: `https://${HOSTNAME}`,
     types: {

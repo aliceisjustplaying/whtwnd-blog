@@ -5,7 +5,7 @@ import remarkRehype from "remark-rehype";
 import RSS from "rss";
 import { unified } from "unified";
 import { getPosts } from "#/lib/api";
-import { HOSTNAME } from "#/lib/config";
+import { DESCRIPTION, HOSTNAME } from "#/lib/config";
 
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour
@@ -17,7 +17,7 @@ export async function GET() {
     title: HOSTNAME,
     feed_url: `https://${HOSTNAME}/rss`,
     site_url: `https://${HOSTNAME}`,
-    description: "a webbed site",
+    description: DESCRIPTION,
   });
 
   for (const post of posts) {
