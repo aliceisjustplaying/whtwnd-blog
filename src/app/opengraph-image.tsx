@@ -10,19 +10,16 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function OpenGraphImage() {
-  const fontData = await readFile(
-    join(process.cwd(), "./src/app/fonts/LibreBaskerville-Italic.ttf"),
-  ).then((res) => Uint8Array.from(res).buffer);
   return new ImageResponse(
     (
       <div tw="h-full w-full bg-white flex flex-col justify-center items-center">
         <h1
           style={{
-            fontFamily: '"Libre Baskerville"',
+            fontFamily: "system",
             fontSize: 80,
             textTransform: "uppercase",
             fontWeight: 700,
-            fontStyle: "italic",
+            fontStyle: "normal",
           }}
         >
           {HOSTNAME}
@@ -32,12 +29,6 @@ export default async function OpenGraphImage() {
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: "Libre Baskerville",
-          data: fontData,
-        },
-      ],
     },
   );
 }
