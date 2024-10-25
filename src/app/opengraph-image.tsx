@@ -13,11 +13,11 @@ export default async function OpenGraphImage() {
       <div tw="h-full w-full bg-white flex flex-col justify-center items-center">
         <h1
           style={{
-            fontFamily: "system",
+            fontFamily: "sans",
             fontSize: 80,
             textTransform: "uppercase",
             fontWeight: 700,
-            fontStyle: "normal",
+            fontStyle: "oblique",
           }}
         >
           {HOSTNAME}
