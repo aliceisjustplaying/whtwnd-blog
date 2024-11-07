@@ -5,7 +5,7 @@ import localFont from "next/font/local";
 import { cx } from "#/lib/cx";
 import "./globals.css";
 
-import { CLOUDFLARE_BEACON_TOKEN, DESCRIPTION, HOSTNAME } from "#/lib/config";
+import { CLOUDFLARE_BEACON_TOKEN, DESCRIPTION, HOSTNAME, PLAUSIBLE_DOMAIN, USE_PLAUSIBLE } from "#/lib/config";
 import Script from "next/script";
 
 const sans = Inter({
@@ -46,12 +46,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <NextPlausible
-          domain={HOSTNAME}
-          customDomain={`https://plausible.${HOSTNAME}`}
-          trackOutboundLinks
-          selfHosted
-        />
+        {USE_PLAUSIBLE && (
+          <NextPlausible
+            domain={HOSTNAME}
+            customDomain={`https://${PLAUSIBLE_DOMAIN}`}
+            trackOutboundLinks
+            selfHosted
+          />
+        )}
       </head>
       <body
         className={cx(

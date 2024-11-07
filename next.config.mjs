@@ -16,7 +16,7 @@ const nextConfig = {
 
 // TODO: janky
 const USE_PLAUSIBLE = false;
-const PLAUSIBLE_DOMAIN = "plausible.alice.bsky.sh";
+const PLAUSIBLE_DOMAIN = "plausible.bsky.sh";
 
 if (USE_PLAUSIBLE) {
   nextConfig = withPlausibleProxy({
