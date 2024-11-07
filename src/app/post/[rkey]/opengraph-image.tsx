@@ -44,12 +44,6 @@ export default async function OpenGraphImage({
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: "Libre Baskerville",
-          data: fontData,
-        },
-      ],
     },
   );
 }

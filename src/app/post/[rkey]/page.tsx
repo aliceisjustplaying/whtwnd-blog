@@ -13,7 +13,7 @@ import { Footer } from "#/components/footer";
 import { PostInfo } from "#/components/post-info";
 import { Code, Paragraph, Title } from "#/components/typography";
 import { getPost, getPosts } from "#/lib/api";
-import { MY_DID, HOSTNAME, AUTHOR_NAME } from "#/lib/config";
+import { AUTHOR_NAME, HOSTNAME, MY_DID } from "#/lib/config";
 
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour
@@ -44,7 +44,7 @@ export default async function BlogPage({
   const post = await getPost(rkey);
 
   return (
-    <div className="xs:px-8 grid min-h-dvh grid-rows-[10px_1fr_20px] justify-items-center px-4 py-2 pb-20 sm:p-8 gap-16">
+    <div className="xs:px-8 grid min-h-dvh grid-rows-[10px_1fr_20px] justify-items-center gap-16 px-4 py-2 pb-20 sm:p-8">
       <link rel="alternate" href={post.uri} />
       <main className="row-start-2 flex w-full max-w-[600px] flex-col items-center gap-0 overflow-hidden sm:items-start">
         <article className="w-full space-y-4">
