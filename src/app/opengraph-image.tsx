@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 import { DESCRIPTION, HOSTNAME } from "#/lib/config";
-import { loadGoogleFont } from "#/lib/google-font";
 
 export const size = {
   width: 1200,
@@ -9,17 +8,12 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function OpenGraphImage() {
-  const fontData = await loadGoogleFont(
-    "Libre+Baskerville:ital@1",
-    `${HOSTNAME} ${DESCRIPTION}`,
-  );
-
   return new ImageResponse(
     (
       <div tw="h-full w-full bg-white flex flex-col justify-center items-center">
         <h1
           style={{
-            fontFamily: "sans",
+            fontFamily: "system",
             fontSize: 80,
             fontWeight: 700,
             fontStyle: "oblique",
@@ -31,7 +25,7 @@ export default async function OpenGraphImage() {
           style={{
             fontSize: 32,
             fontStyle: "italic",
-            fontFamily: '"Libre Baskerville"',
+            fontFamily: "system",
           }}
         >
           {DESCRIPTION}
@@ -40,12 +34,6 @@ export default async function OpenGraphImage() {
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: "Libre Baskerville",
-          data: fontData,
-        },
-      ],
     },
   );
 }
