@@ -14,14 +14,6 @@ const nextConfig = {
   },
 };
 
-// TODO: janky
-// const USE_PLAUSIBLE = true;
-const PLAUSIBLE_DOMAIN = "plausible.bsky.sh";
-
-// if (USE_PLAUSIBLE) {
-nextConfig = withPlausibleProxy({
-  customDomain: `https://${PLAUSIBLE_DOMAIN}`,
+export default withPlausibleProxy({
+  customDomain: "https://plausible.bsky.sh",
 })(nextConfig);
-// }
-
-export default nextConfig;
