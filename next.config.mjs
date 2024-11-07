@@ -15,7 +15,7 @@ const nextConfig = {
 };
 
 // TODO: janky
-const USE_PLAUSIBLE = false;
+const USE_PLAUSIBLE = true;
 const PLAUSIBLE_DOMAIN = "plausible.bsky.sh";
 
 if (USE_PLAUSIBLE) {
