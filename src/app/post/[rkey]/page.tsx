@@ -13,7 +13,7 @@ import { Footer } from "#/components/footer";
 import { PostInfo } from "#/components/post-info";
 import { Code, Paragraph, Title } from "#/components/typography";
 import { getPost, getPosts } from "#/lib/api";
-import { MY_DID, HOSTNAME, DESCRIPTION, AUTHOR_NAME } from "#/lib/config";
+import { MY_DID, HOSTNAME, AUTHOR_NAME } from "#/lib/config";
 
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour

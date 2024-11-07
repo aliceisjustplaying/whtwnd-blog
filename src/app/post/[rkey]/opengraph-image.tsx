@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPost } from "#/lib/api";
 import { loadGoogleFont } from "#/lib/google-font";
-import { DESCRIPTION, HOSTNAME } from "#/lib/config";
+import { HOSTNAME } from "#/lib/config";
 
 export const size = {
   width: 1200,
