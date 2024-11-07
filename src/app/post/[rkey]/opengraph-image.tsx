@@ -18,20 +18,15 @@ export default async function OpenGraphImage({
 
   const post = await getPost(rkey);
 
-  const fontData = await loadGoogleFont(
-    "Libre+Baskerville:ital@1",
-    HOSTNAME + post.value.title?.toLocaleUpperCase(),
-  );
-
   return new ImageResponse(
     (
       <div tw="h-full w-full bg-white flex flex-col justify-center items-center px-20">
         <h1
           style={{
-            fontFamily: '"Libre Baskerville"',
+            fontFamily: "system",
             fontSize: 80,
             fontWeight: 700,
-            fontStyle: "italic",
+            fontStyle: "oblique",
             textAlign: "center",
           }}
         >
@@ -41,7 +36,7 @@ export default async function OpenGraphImage({
           style={{
             fontSize: 32,
             fontStyle: "italic",
-            fontFamily: '"Libre Baskerville"',
+            fontFamily: "system",
           }}
         >
           {HOSTNAME}
