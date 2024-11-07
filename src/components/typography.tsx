@@ -34,7 +34,7 @@ export function Title({
   return (
     <Tag
       className={cx(
-        "font-sans-serif mt-16 scroll-m-20 text-balance font-bold uppercase tracking-tight first:mt-0 [&>code]:text-[length:inherit]",
+        "font-sans-serif mt-16 scroll-m-20 text-balance font-bold tracking-tight first:mt-0 [&>code]:text-[length:inherit]",
         style,
         className,
       )}

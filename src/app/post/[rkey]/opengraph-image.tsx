@@ -29,7 +29,7 @@ export default async function OpenGraphImage({
             textAlign: "center",
           }}
         >
-          {post.value.title?.toLocaleUpperCase()}
+          {post.value.title}
         </h1>
         <h1
           style={{
