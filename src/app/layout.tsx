@@ -3,10 +3,10 @@ import NextPlausible from "next-plausible";
 import { Inter, Libre_Baskerville } from "next/font/google";
 import localFont from "next/font/local";
 import { cx } from "#/lib/cx";
-
 import "./globals.css";
 
-import { DESCRIPTION, HOSTNAME } from "#/lib/config";
+import { CLOUDFLARE_BEACON_TOKEN, DESCRIPTION, HOSTNAME } from "#/lib/config";
+import Script from "next/script";
 
 const sans = Inter({
   variable: "--font-inter",
@@ -63,6 +63,11 @@ export default function RootLayout({
       >
         {children}
       </body>
+      <Script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></Script>
+      <Script
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${CLOUDFLARE_BEACON_TOKEN}"}`}
+      ></Script>
     </html>
   );
 }

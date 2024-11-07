@@ -6,3 +6,4 @@ export const TITLE = "alice.bsky.sh";
 export const DESCRIPTION =
   "this is a blog. there are many like it, but this one is mine.";
 export const GITHUB_USERNAME = "aliceisjustplaying";
+export const CLOUDFLARE_BEACON_TOKEN = "80339998c1034152803ce2df95a47a56";
