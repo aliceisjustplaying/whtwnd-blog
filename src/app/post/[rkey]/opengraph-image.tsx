@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
-import { DESCRIPTION, HOSTNAME } from "#/lib/config";
+import { getPost } from "#/lib/api";
 import { loadGoogleFont } from "#/lib/google-font";
+import { DESCRIPTION, HOSTNAME } from "#/lib/config";
 
 export const size = {
   width: 1200,
@@ -8,24 +9,33 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default async function OpenGraphImage() {
+export default async function OpenGraphImage({
+  params,
+}: {
+  params: Promise<{ rkey: string }>;
+}) {
+  const { rkey } = await params;
+
+  const post = await getPost(rkey);
+
   const fontData = await loadGoogleFont(
     "Libre+Baskerville:ital@1",
-    `${HOSTNAME} ${DESCRIPTION}`,
+    HOSTNAME + post.value.title?.toLocaleUpperCase(),
   );
 
   return new ImageResponse(
     (
-      <div tw="h-full w-full bg-white flex flex-col justify-center items-center">
+      <div tw="h-full w-full bg-white flex flex-col justify-center items-center px-20">
         <h1
           style={{
-            fontFamily: "sans",
+            fontFamily: '"Libre Baskerville"',
             fontSize: 80,
             fontWeight: 700,
-            fontStyle: "oblique",
+            fontStyle: "italic",
+            textAlign: "center",
           }}
         >
-          {HOSTNAME}
+          {post.value.title?.toLocaleUpperCase()}
         </h1>
         <h1
           style={{
@@ -34,7 +44,7 @@ export default async function OpenGraphImage() {
             fontFamily: '"Libre Baskerville"',
           }}
         >
-          {DESCRIPTION}
+          {HOSTNAME}
         </h1>
       </div>
     ),

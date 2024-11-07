@@ -1,4 +1,3 @@
-import { type ComWhtwndBlogEntry } from "@atcute/client/lexicons";
 import { Code as SyntaxHighlighter } from "bright";
 import { ArrowLeftIcon } from "lucide-react";
 import { type Metadata } from "next";
@@ -6,13 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import readingTime from "reading-time";
-import rehypeSanitize from "rehype-sanitize";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
+import { BlueskyPostEmbed } from "#/components/bluesky-embed";
 import { Footer } from "#/components/footer";
 import { PostInfo } from "#/components/post-info";
 import { Code, Paragraph, Title } from "#/components/typography";
-import { getPosts } from "#/lib/api";
-import { bsky } from "#/lib/bsky";
-import { AUTHOR_NAME, HOSTNAME, MY_DID } from "#/lib/config";
+import { getPost, getPosts } from "#/lib/api";
+import { MY_DID, HOSTNAME, DESCRIPTION, AUTHOR_NAME } from "#/lib/config";
 
 export const dynamic = "force-static";
 export const revalidate = 3600; // 1 hour
@@ -24,20 +25,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { rkey } = await params;
 
-  const post = await bsky.get("com.atproto.repo.getRecord", {
-    params: {
-      repo: MY_DID,
-      rkey: rkey,
-      collection: "com.whtwnd.blog.entry",
-    },
-  });
-
-  const entry = post.data.value as ComWhtwndBlogEntry.Record;
+  const post = await getPost(rkey);
 
   return {
-    title: entry.title + ` — ${HOSTNAME}`,
+    title: post.value.title + ` — ${HOSTNAME}`,
     authors: [{ name: AUTHOR_NAME, url: `https://bsky.app/profile/${MY_DID}` }],
-    description: `by ${AUTHOR_NAME} · ${readingTime(entry.content).text}`,
+    description: `by ${AUTHOR_NAME} · ${readingTime(post.value.content).text}`,
   };
 }
 
@@ -48,18 +41,11 @@ export default async function BlogPage({
 }) {
   const { rkey } = await params;
 
-  const post = await bsky.get("com.atproto.repo.getRecord", {
-    params: {
-      repo: MY_DID,
-      rkey: rkey,
-      collection: "com.whtwnd.blog.entry",
-    },
-  });
-
-  const entry = post.data.value as ComWhtwndBlogEntry.Record;
+  const post = await getPost(rkey);
 
   return (
-    <div className="xs:px-8 grid min-h-dvh grid-rows-[10px_1fr_20px] justify-items-center px-4 py-2 pb-20 sm:p-8">
+    <div className="xs:px-8 grid min-h-dvh grid-rows-[10px_1fr_20px] justify-items-center px-4 py-2 pb-20 sm:p-8 gap-16">
+      <link rel="alternate" href={post.uri} />
       <main className="row-start-2 flex w-full max-w-[600px] flex-col items-center gap-0 overflow-hidden sm:items-start">
         <article className="w-full space-y-4">
           <div className="w-full space-y-4">
@@ -70,16 +56,35 @@ export default async function BlogPage({
               <ArrowLeftIcon className="mb-px mr-1 inline size-4 align-middle" />
               Back
             </Link>
-            <Title>{entry.title}</Title>
+            <Title>{post.value.title}</Title>
             <PostInfo
-              content={entry.content}
-              createdAt={entry.createdAt}
+              content={post.value.content}
+              createdAt={post.value.createdAt}
               includeAuthor
             />
             <hr className="border-slate-800/10 dark:border-slate-100/10" />
           </div>
           <Markdown
-            rehypePlugins={[rehypeSanitize]}
+            remarkPlugins={[remarkGfm]}
+            remarkRehypeOptions={{ allowDangerousHtml: true }}
+            rehypePlugins={[
+              rehypeRaw,
+              [
+                rehypeSanitize,
+                {
+                  ...defaultSchema,
+                  attributes: {
+                    ...defaultSchema.attributes,
+                    blockquote: [
+                      ...(defaultSchema.attributes?.blockquote ?? []),
+                      "dataBlueskyUri",
+                      "dataBlueskyCid",
+                    ],
+                  },
+                } satisfies typeof defaultSchema,
+              ],
+            ]}
+            className="[&>.bluesky-embed]:mb-0 [&>.bluesky-embed]:mt-8"
             components={{
               h1: (props) => <Title level="h1" {...props} />,
               h2: (props) => <Title level="h2" {...props} />,
@@ -93,12 +98,13 @@ export default async function BlogPage({
                   {...props}
                 />
               ),
-              blockquote: (props) => (
-                <blockquote
-                  className="mt-6 border-l-2 border-slate-200 pl-4 italic text-slate-600 dark:border-slate-800 dark:text-slate-400"
-                  {...props}
-                />
-              ),
+              blockquote: (props) =>
+                "data-bluesky-uri" in props ?
+                  <BlueskyPostEmbed uri={props["data-bluesky-uri"] as string} />
+                : <blockquote
+                    className="mt-6 border-l-2 border-slate-200 pl-4 italic text-slate-600 dark:border-slate-800 dark:text-slate-400"
+                    {...props}
+                  />,
               ul: (props) => (
                 <ul
                   className="my-6 ml-6 list-disc [&>li]:mt-2 [&>ol]:my-2 [&>ul]:my-2"
@@ -149,7 +155,7 @@ export default async function BlogPage({
               ),
             }}
           >
-            {entry.content}
+            {post.value.content}
           </Markdown>
         </article>
       </main>

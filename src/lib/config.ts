@@ -1,6 +1,6 @@
 export const MY_DID = "did:plc:by3jhwdqgbtrcc7q4tkkv3cf";
 export const MY_PDS = "oyster.us-east.host.bsky.network";
-export const AUTHOR_NAME = "alice";
+export const AUTHOR_NAME = "Alice";
 export const HOSTNAME = "alice.bsky.sh";
 export const TITLE = "alice.bsky.sh";
 export const DESCRIPTION =
