@@ -57,6 +57,11 @@ export default function RootLayout({
           <NextPlausible
             domain={HOSTNAME}
             customDomain={`https://${PLAUSIBLE_DOMAIN}`}
+            scriptProps={{
+              /*
+              // @ts-expect-error because */
+              strategy: "beforeInteractive",
+            }}
             trackOutboundLinks
             selfHosted
           />
