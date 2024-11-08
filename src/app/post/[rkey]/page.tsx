@@ -31,6 +31,12 @@ export async function generateMetadata({
     title: post.value.title + ` — ${HOSTNAME}`,
     authors: [{ name: AUTHOR_NAME, url: `https://bsky.app/profile/${MY_DID}` }],
     description: `by ${AUTHOR_NAME} · ${readingTime(post.value.content).text}`,
+    alternates: {
+      canonical: `https://${HOSTNAME}/post/${rkey}`,
+      types: {
+        "application/rss+xml": `https://${HOSTNAME}/rss`,
+      },
+    },
   };
 }
 
