@@ -54,17 +54,26 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {USE_PLAUSIBLE && (
-          <NextPlausible
-            domain={HOSTNAME}
-            customDomain={`https://${PLAUSIBLE_DOMAIN}`}
-            scriptProps={{
-              /*
-              // @ts-expect-error because */
-              strategy: "beforeInteractive",
-            }}
-            trackOutboundLinks
-            selfHosted
-          />
+          <>
+            <NextPlausible
+              domain={HOSTNAME}
+              customDomain={`https://${PLAUSIBLE_DOMAIN}`}
+              scriptProps={{
+                /*
+              // @ts-expect-error sigh */
+                strategy: "beforeInteractive",
+              }}
+              trackOutboundLinks
+              selfHosted
+            />
+            <Script
+              id="next-plausible-init-override"
+              strategy="beforeInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
+              }}
+            />
+          </>
         )}
       </head>
       <body
