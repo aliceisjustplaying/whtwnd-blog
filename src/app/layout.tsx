@@ -12,7 +12,6 @@ import {
   DESCRIPTION,
   HOSTNAME,
   PLAUSIBLE_DOMAIN,
-  USE_PLAUSIBLE,
 } from "#/lib/config";
 
 const sans = Inter({
@@ -53,28 +52,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {USE_PLAUSIBLE && (
-          <>
-            <NextPlausible
-              domain={HOSTNAME}
-              customDomain={`https://${PLAUSIBLE_DOMAIN}`}
-              scriptProps={{
-                /*
-              // @ts-expect-error sigh */
-                strategy: "beforeInteractive",
-              }}
-              trackOutboundLinks
-              selfHosted
-            />
-            <Script
-              id="next-plausible-init-override"
-              strategy="beforeInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
-              }}
-            />
-          </>
-        )}
+        <NextPlausible
+          domain={HOSTNAME}
+          customDomain={`https://${PLAUSIBLE_DOMAIN}`}
+          trackOutboundLinks
+          selfHosted
+        />
       </head>
       <body
         className={cx(
