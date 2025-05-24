@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import NextPlausible from "next-plausible";
 import { Inter, Libre_Baskerville } from "next/font/google";
 import localFont from "next/font/local";
 import { cx } from "#/lib/cx";
@@ -52,11 +51,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <NextPlausible
-          domain={HOSTNAME}
-          customDomain={`https://${PLAUSIBLE_DOMAIN}`}
-          trackOutboundLinks
-          selfHosted
+        <Script
+          defer
+          data-domain="alice.bsky.sh"
+          src={`https://${PLAUSIBLE_DOMAIN}/js/script.outbound-links.js`}
         />
       </head>
       <body

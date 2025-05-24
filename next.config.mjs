@@ -1,5 +1,3 @@
-import { withPlausibleProxy } from "next-plausible";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -14,6 +12,4 @@ const nextConfig = {
   },
 };
 
-export default withPlausibleProxy({
-  customDomain: "https://plausible.bsky.sh",
-})(nextConfig);
+export default nextConfig;
