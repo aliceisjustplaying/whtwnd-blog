@@ -148,17 +148,24 @@ export default async function BlogPage({
                   {...props}
                 />
               ),
-              img: ({ src, alt }) => (
-                <span className="relative mt-8 block aspect-video w-full">
-                  <Image
-                    src={src!}
-                    alt={alt!}
-                    className="object-contain"
-                    quality={90}
-                    fill
-                  />
-                </span>
-              ),
+              img: ({ src, alt }) => {
+                if (!src || typeof src !== "string") {
+                  // Only Next/Image-compatible sources render here; fall back otherwise.
+                  return null;
+                }
+
+                return (
+                  <span className="relative mt-8 block aspect-video w-full">
+                    <Image
+                      src={src}
+                      alt={alt ?? ""}
+                      className="object-contain"
+                      quality={90}
+                      fill
+                    />
+                  </span>
+                );
+              },
             }}
           >
             {post.value.content}
