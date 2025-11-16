@@ -13,6 +13,7 @@ import type {
   LeafletOrderedListBlock,
   LeafletUnorderedListBlock,
 } from "#/lib/leaflet/types";
+import { leafletBlobToImageSrc } from "#/lib/leaflet/images";
 
 const alignmentClasses: Record<string, string> = {
   "lex:pub.leaflet.pages.linearDocument#textAlignLeft": "items-start text-left",
@@ -90,7 +91,7 @@ function renderLeafletBlock(block: LeafletBlock, authorDid: string): React.React
     case "pub.leaflet.blocks.horizontalRule":
       return <hr className="border-slate-800/10 dark:border-slate-100/10" />;
     case "pub.leaflet.blocks.image": {
-      const src = blobRefToUrl(block.image, authorDid);
+      const src = leafletBlobToImageSrc(block.image, authorDid);
       if (!src) return null;
       const { width, height } = block.aspectRatio;
       const safeHeight = height || 1;
@@ -251,12 +252,6 @@ function LeafletListItemRenderer({
       ) : null}
     </li>
   );
-}
-
-function blobRefToUrl(blob: { ref?: { $link?: string } } | undefined, did: string) {
-  const cid = blob?.ref?.$link;
-  if (!cid) return null;
-  return `https://cdn.bsky.app/img/feed_fullsize/plain/${encodeURIComponent(did)}/${cid}@jpeg`;
 }
 
 function BskyPostPreview({ block }: { block: LeafletBskyPostBlock }) {

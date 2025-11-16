@@ -6,9 +6,15 @@ import { LeafletContent } from "#/components/leaflet/leaflet-content";
 import { Footer } from "#/components/footer";
 import { PostInfo } from "#/components/post-info";
 import { Title } from "#/components/typography";
+import { leafletBlobToImageSrc } from "#/lib/leaflet/images";
 import { getLeafletPost, getLeafletPosts } from "#/lib/leaflet/api";
 import { extractLeafletPlaintext } from "#/lib/leaflet/plaintext";
-import type { LeafletDocumentRecord } from "#/lib/leaflet/types";
+import type {
+  LeafletBlock,
+  LeafletDocumentRecord,
+  LeafletImageBlock,
+  LeafletListItem,
+} from "#/lib/leaflet/types";
 import { AUTHOR_NAME, HOSTNAME } from "#/lib/config";
 
 export const dynamic = "force-static";
@@ -35,14 +41,32 @@ export async function generateMetadata({
   const post = await getLeafletPost(rkey);
   const record = post.value as LeafletDocumentRecord;
   const description = record.description || extractLeafletPlaintext(record).slice(0, 160);
+  const canonical = `https://${HOSTNAME}/leaflet/${rkey}`;
+  const firstImage = findFirstLeafletImage(record);
+  const imageUrl = firstImage ? leafletBlobToImageSrc(firstImage.image, record.author) : null;
 
   return {
     title: `${record.title} — ${HOSTNAME}`,
     description,
     alternates: {
-      canonical: `https://${HOSTNAME}/leaflet/${rkey}`,
+      canonical,
     },
     authors: [{ name: AUTHOR_NAME, url: `https://bsky.app/profile/${record.author}` }],
+    openGraph: {
+      type: "article",
+      url: canonical,
+      title: record.title,
+      description,
+      publishedTime: record.publishedAt,
+      authors: [AUTHOR_NAME],
+      images: imageUrl ? [{ url: imageUrl, alt: firstImage?.alt ?? record.title }] : undefined,
+    },
+    twitter: {
+      card: imageUrl ? "summary_large_image" : "summary",
+      title: record.title,
+      description,
+      images: imageUrl ? [imageUrl] : undefined,
+    },
   };
 }
 
@@ -79,4 +103,43 @@ export default async function LeafletPostPage({
       <Footer />
     </div>
   );
+}
+
+function findFirstLeafletImage(record: LeafletDocumentRecord): LeafletImageBlock | null {
+  for (const page of record.pages) {
+    if (page.$type !== "pub.leaflet.pages.linearDocument") continue;
+    for (const block of page.blocks) {
+      const found = findImageInBlock(block.block);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function findImageInBlock(block: LeafletBlock): LeafletImageBlock | null {
+  switch (block.$type) {
+    case "pub.leaflet.blocks.image":
+      return block;
+    case "pub.leaflet.blocks.unorderedList":
+    case "pub.leaflet.blocks.orderedList":
+      for (const child of block.children) {
+        const found = findImageInListItem(child);
+        if (found) return found;
+      }
+      return null;
+    default:
+      return null;
+  }
+}
+
+function findImageInListItem(item: LeafletListItem): LeafletImageBlock | null {
+  const direct = findImageInBlock(item.content);
+  if (direct) return direct;
+  if (item.children) {
+    for (const child of item.children) {
+      const nested = findImageInListItem(child);
+      if (nested) return nested;
+    }
+  }
+  return null;
 }
