@@ -13,6 +13,7 @@
   "dependencies": {
     "@atcute/client": "^2.0.9",
     "@atcute/whitewind": "^1.0.4",
+    "@atproto/api": "^0.18.0",
     "bright": "^0.8.6",
     "lucide-react": "^0.453.0",
     "next": "16.0.3",

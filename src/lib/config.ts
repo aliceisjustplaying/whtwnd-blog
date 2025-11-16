@@ -8,3 +8,6 @@ export const DESCRIPTION =
 export const GITHUB_USERNAME = "aliceisjustplaying";
 export const CLOUDFLARE_BEACON_TOKEN = "80339998c1034152803ce2df95a47a56";
 export const PLAUSIBLE_DOMAIN = "plausible.bsky.sh";
+
+export const LEAFLET_PUBLICATION_DID = MY_DID;
+export const LEAFLET_PDS = MY_PDS;
